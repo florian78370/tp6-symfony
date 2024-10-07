@@ -6,6 +6,7 @@ use App\Entity\Artiste;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class ArtisteType extends AbstractType
 {
@@ -17,6 +18,11 @@ class ArtisteType extends AbstractType
             ->add('site')
             ->add('image')
             ->add('type')
+            ->add('valider', SubmitType::class,[
+                "attr"=> [
+                    'class'=>"btn btn-success"
+                    ]
+                ])
         ;
     }
 

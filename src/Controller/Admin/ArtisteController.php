@@ -27,12 +27,14 @@ class ArtisteController extends AbstractController
             ]);
         }
 
-        #[Route('/admin/artistes/ajout', name: 'admin_artiste_ajout', methods :'GET, POST')]
+        #[Route('/admin/artiste/ajout', name: 'admin_artiste_ajout', methods : ["GET", "POST"])]
+        
         public function AjouterAtiste() : Response
         {
             $artiste=new Artiste();
             $form=$this->createForm(ArtisteType::class, $artiste);
-            return $this->render('admin/artiste/listeArtistes.html.twig', [
-                'lesArtistes' => $artistes
+            return $this->render('admin/artiste/formAjoutArtiste.html.twig', [
+                'formArtiste' => $form->createView()
             ]);
+        }
 }
