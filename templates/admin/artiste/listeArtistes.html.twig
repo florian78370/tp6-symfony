@@ -31,7 +31,7 @@
             <p>{{leArtiste.description|slice(0,100)|raw}}</p>
             </td>
             <td class="col-2">
-            <a href="" class="btn btn-primary"><i class="fas fa-pen"></i></a>
+            <a href="{{path('admin_artiste_modif', {'id' : leArtiste.id})}}" class="btn btn-primary"><i class="fas fa-pen"></i></a>
             <a type="button" class="btn btn-danger" data-bs-toggle="modalSimple" data-bs-target="#exampleModal"><i class="far fa-trash-alt"></i>
 </a>
             </td>
