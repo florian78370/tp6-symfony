@@ -29,39 +29,38 @@ class ArtisteController extends AbstractController
         }
 
         #[Route('/admin/artiste/ajout', name: 'admin_artiste_ajout', methods : ["GET", "POST"])]
-        
-        public function AjouterArtiste( Request $request, EntityManagerInterface $manager) : Response
+        #[Route('/admin/artiste/modif/{id}', name: 'admin_artiste_modif', methods : ["GET", "POST"])]
+        public function AjoutermodifArtiste(?Artiste $artiste, Request $request, EntityManagerInterface $manager) : Response
         {
-            $artiste=new Artiste();
+            if ($artiste == null) {
+                 $artiste=new Artiste();
+                 $mode="ajouté";
+            }else {
+                    $mode="modifier";
+                 }
+           
             $form=$this->createForm(ArtisteType::class, $artiste);
             $form->handleRequest($request);
+
             if ($form->isSubmitted() && $form->isValid()) { 
+
                 $manager->persist($artiste);
                 $manager->flush();
-                $this->addFlash("success","L'artiste a bien été ajouté");
+                $this->addFlash("success","L'artiste a bien été $mode");
                 return $this->redirectToRoute('admin_artistes');
             }
-            return $this->render('admin/artiste/formAjoutArtiste.html.twig', [
+            return $this->render('admin/artiste/formAjoutModifArtiste.html.twig', [
                 'formArtiste' => $form->createView()
             ]);
         }
 
-        #[Route('/admin/artiste/modif/{id}', name: 'admin_artiste_modif', methods : ["GET", "POST"])]
-        
-        public function modifArtiste(Artiste $artiste, Request $request, EntityManagerInterface $manager) : Response
-        {
-            $form=$this->createForm(ArtisteType::class, $artiste);
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid()) 
-            { 
-                $manager->persist($artiste);
+       
+        #[Route('/admin/artiste/suppresion/{id}', name: 'admin_artiste_suppression', methods : ["DELETE"])]
+        public function suppresionArtiste(?Artiste $artiste,EntityManagerInterface $manager) : Response
+        { 
+                $manager->remove($artiste);
                 $manager->flush();
-                $this->addFlash("success","L'artiste a bien été modifié");
+                $this->addFlash("success","L'artiste a bien été supprimé");
                 return $this->redirectToRoute('admin_artistes');
-            }
-            return $this->render('admin/artiste/formModifArtiste.html.twig', [
-                'formArtiste' => $form->createView()
-            ]);
         }
 }

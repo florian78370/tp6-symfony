@@ -29,7 +29,7 @@ class ArtisteRepository extends ServiceEntityRepository
    {
       return $this->createQueryBuilder('art')
                 ->select('art','a')
-                ->innerJoin('art.albums', 'a')
+                ->LeftJoin('art.albums', 'a')
                 ->orderBy('art.nom', 'ASC')
            ->getQuery()
           ->getResult()
@@ -44,7 +44,7 @@ class ArtisteRepository extends ServiceEntityRepository
    {
       return $this->createQueryBuilder('art')
                 ->select('art','a')
-                ->innerJoin('art.albums', 'a')
+                ->LeftJoin('art.albums', 'a')
                 ->orderBy('art.nom', 'ASC')
            ->getQuery()
        ;
