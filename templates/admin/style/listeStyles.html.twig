@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion Styles!{% endblock %}
+
+{% block body %}
+<h1 class="pt-2 text-center">liste des styles</h1>
+  <a href="{{ path("admin_style_ajout")}}" class="btn btn-success">Ajouter un style</a> 
+<hr>
+                    <table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col-1">Couleur</th>
+      <th scope="col-2">Nom</th>
+      <th scope="col-7"></th>
+      <th scope="col-2">Action</th>
+    </tr>
+  </thead>
+  <tbody> 
+        {% for leStyle in lesStyles %}
+            {% set nbalbums = leStyle.albums|length %}
+            <tr>
+            <td class="col-3"></td>  
+            <td class="col-5"> {{leStyle.nom}}</td>
+            <td class="col-2"> 
+            <span class="align-self-center badge badge-success">{{nbalbums}}  {% if nbalbums > 1 %} style {% else %} style {% endif %}  </span></td>
+            <td class="col-2">
+            <a href="{{path('admin_style_modif', {'id' : leStyle.id})}}" class="btn btn-primary"><i class="fas fa-pen"></i></a>
+            <a class="btn btn-danger" 
+            data-toggle="modal" 
+            data-target="#modalSimple"
+            data-titre="Suppresion d'un style"
+            data-message="etes vous sure de vouloir supprimer le style : {{leStyle.nom}}"
+            data-libelleBouton="Supprimer l'artiste"
+            data-lien="{{path('admin_style_suppression', {'id': leStyle.id})}}"
+            ><i class="far fa-trash-alt"></i> </a> 
+            </td>
+            </tr>
+{% endfor %}
+  </tbody>
+</table>
+<div class="navigation mx-auto">
+{{ knp_pagination_render(lesStyles)}}
+</div>
+</div>
+{% include "include/_modale.html.twig" %}
+{% endblock %}
